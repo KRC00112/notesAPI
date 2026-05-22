@@ -17,18 +17,30 @@ resource "aws_security_group" "notesapi_sg" {
   name        = "notesapi_sg"
   description = "notesAPI security group"
   ingress {
-    from_port   = 5000
-    to_port     = 5000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-
-  }
-  ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
 
+  }
+  ingress {
+    from_port   = 6443
+    to_port     = 6443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+
+    from_port   = 30000
+    to_port     = 32767
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    self      = true
   }
   egress {
     from_port   = 0
@@ -48,13 +60,14 @@ resource "aws_key_pair" "notesapi_key" {
 
 
 resource "aws_instance" "app_server" {
+  count                  = 2
   ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t3.micro"
+  instance_type          = "c7i-flex.large"
   key_name               = aws_key_pair.notesapi_key.key_name
   vpc_security_group_ids = [aws_security_group.notesapi_sg.id]
 
   tags = {
-    Name = "notes-api-instance"
+    Name = "notes-api-instance-${count.index}"
 
   }
 
