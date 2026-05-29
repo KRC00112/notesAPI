@@ -26,7 +26,7 @@ jobs:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_TOKEN}}
 
-      - name: compose up
+      - name: compose build
         run: docker compose up
 
       - name: compose push
