@@ -10,13 +10,9 @@ data "aws_availability_zones" "available" {
 }
 
 locals {
-  cluster_name = "noteapi-eks-${random_string.suffix.result}"
+  cluster_name = "noteapi-eks"
 }
 
-resource "random_string" "suffix" {
-  length  = 8
-  special = false
-}
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
@@ -107,6 +103,7 @@ module "irsa-ebs-csi" {
 
 data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_name
+  depends_on=[module.eks]
 }
 
 provider "kubernetes" {
