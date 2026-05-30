@@ -1,6 +1,6 @@
 services:
   backend:
-    image: krcdocker2138/notes-backend:test
+    image: krcdocker2138/notes-backend:lastest
     build: ./backend
     ports:
       - "5000:5000"
