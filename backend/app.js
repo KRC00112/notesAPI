@@ -33,7 +33,7 @@ app.get('/:id',async(req,res)=>{
 
 app.post('/', async(req,res)=>{
     try{
-        const results=await pool.query("INSERT INTO notes(note) VALUES($1) RETURNING *",[req.body.note]+"-i")
+        const results=await pool.query("INSERT INTO notes(note) VALUES($1) RETURNING *",[req.body.note+'-i'])
         res.json(results.rows[0]);
     }catch(err){
         res.status(500).json({error: err});
