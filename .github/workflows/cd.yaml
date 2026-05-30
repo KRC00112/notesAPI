@@ -25,7 +25,7 @@ jobs:
 
       - name: deploy latest image
         run: |
-          kubectl set image deployment/notesapi-deployment notesapi-container=krcdocker2138/notes-backend:latest 
+          kubectl set image deployment/notesapi-deployment notesapi-container=krcdocker2138/notes-backend:${{github.event.workflow_run.head_sha}} 
           kubectl rollout status deployment/notesapi-deployment
           
 

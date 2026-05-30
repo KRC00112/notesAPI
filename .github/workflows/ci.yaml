@@ -23,11 +23,14 @@ jobs:
       - name: compose build
         run: docker compose build
 
-      - name: compose push
-        run: docker compose push
-
-
-
-
-
-
+      - name: push to docker hub
+        run: |
+          docker tag krcdocker2138/notes-backend:latest krcdocker2138/notes-backend:${{github.sha}}
+          docker push krcdocker2138/notes-backend:${{github.sha}}
+        
+          
+          
+          
+          
+          
+          
